@@ -8,7 +8,7 @@
 
 import React from 'react';
 import {
-  StyleSheet
+  StyleSheet, AppState
 } from 'react-native';
 
 import {
@@ -16,16 +16,22 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
-import IntroNavigation from './src/Navigation/IntroNavigation';
 import AppNavigation from './src/Navigation/AppNavigation';
+import { createStore, applyMiddleware } from 'redux';
+import AppReducer from './src/ReduxModules/Reducers/AppReducer';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+const appStore = createStore(AppReducer, applyMiddleware(thunk));
 
 const App = () => {
   return (
     <>
+      <Provider store={appStore}>
         <NavigationContainer>
-          {/* <IntroNavigation /> */}
           <AppNavigation />
         </NavigationContainer>
+      </Provider>
     </>
   );
 };
